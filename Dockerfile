@@ -1,3 +1,3 @@
-FROM confluentinc/confluent-cli
+FROM jorgenringen/kafkacmd
 
 CMD ["tail", "-f", "/dev/null"]
