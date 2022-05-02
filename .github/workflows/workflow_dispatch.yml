@@ -1,0 +1,25 @@
+on:
+  workflow_dispatch:
+    inputs:
+      force-deploy-dev:
+        description: force deploy to dev
+        required: true
+        default: 'true'
+      version:
+        description: version to deploy
+        required: true
+        default: '2.12.0'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.force-deploy-dev == 'true'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          CLUSTER: dev-gcp
+          RESOURCE: nais.yml
+          VAR: image=ghcr.io/navikt/aap-kafka-cli/kafka-cli:${{ github.event.inputs.version }}
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          PRINT_PAYLOAD: true
