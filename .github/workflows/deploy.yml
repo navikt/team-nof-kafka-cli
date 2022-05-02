@@ -1,37 +1,32 @@
+name: Deploy
+
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:
 
 env:
-  VERSION: 2.12.0 # confluentinc/confluent-cli version
-  SRC: confluentinc/confluent-cli
-  DEST: ghcr.io/navikt/aap-kafka-cli/kafka-cli
+  IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
 
 jobs:
-  re-tag:
+  deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-       # TODO: flip result, fail if exists
-      - run: docker manifest inspect ${{ env.SRC }}:${{ env.VERSION }}
-      - run: docker pull ${{ env.SRC }}:${{ env.VERSION }}
-      - run: docker tag ${{ env.SRC }}:${{ env.VERSION }} ${{ env.DEST }}:${{ env.VERSION }}
-      - run: docker push ${{ env.DEST }}:${{ env.VERSION }}
+      - uses: docker/build-push-action@v2.10.0
+        with:
+          push: true
+          tags: ${{ env.IMAGE }},ghcr.io/navikt/${{ github.repository }}:latest
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [ re-tag ]
-    steps:
-      - uses: actions/checkout@v3
       - uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais.yml
-          VAR: image=${{ env.DEST }}:${{ env.VERSION }}
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           PRINT_PAYLOAD: true
