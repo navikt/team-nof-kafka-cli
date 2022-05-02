@@ -4,7 +4,8 @@ on:
 
 env:
   VERSION: 2.12.0 # confluentinc/confluent-cli version
-  IMAGE: ghcr.io/navikt/aap-kafka-cli/kafka-cli:${{ env.VERSION }}
+  SRC: confluentinc/confluent-cli
+  DEST: ghcr.io/navikt/aap-kafka-cli/kafka-cli
 
 jobs:
   re-tag:
@@ -16,10 +17,10 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: docker manifest inspect confluentinc/confluent-cli:${{ env.VERSION }}
-      - run: docker pull confluentinc/confluent-cli:${{ env.VERSION }}
-      - run: docker tag confluentinc/confluent-cli:${{ env.VERSION }} ghcr.io/navikt/aap-kafka-cli/kafka-cli:${{ env.VERSION }}
-      - run: docker push ghcr.io/navikt/aap-kafka-cli/kafka-cli:${{ env.VERSION }}
+      - run: docker manifest inspect ${{ env.SRC }}:${{ env.VERSION }}
+      - run: docker pull ${{ env.SRC }}:${{ env.VERSION }}
+      - run: docker tag ${{ env.SRC }}:${{ env.VERSION }} ${{ env.DEST }}:${{ env.VERSION }}
+      - run: docker push ${{ env.DEST }}:${{ env.VERSION }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -28,7 +29,8 @@ jobs:
       - uses: actions/checkout@v3
       - uses: nais/deploy/actions/deploy@v1
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: nais.yml
+          VAR: image=${{ env.DEST }}:${{ env.VERSION }}
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           PRINT_PAYLOAD: true
