@@ -17,6 +17,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+       # TODO: flip result, fail if exists
       - run: docker manifest inspect ${{ env.SRC }}:${{ env.VERSION }}
       - run: docker pull ${{ env.SRC }}:${{ env.VERSION }}
       - run: docker tag ${{ env.SRC }}:${{ env.VERSION }} ${{ env.DEST }}:${{ env.VERSION }}
