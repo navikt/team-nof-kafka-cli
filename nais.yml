@@ -1,5 +1,5 @@
 apiVersion: nais.io/v1alpha1
-kind: Pod
+kind: Application
 metadata:
   name: kafka-cli
   namespace: aap
@@ -19,7 +19,3 @@ spec:
     requests:
       cpu: 100m
       memory: 1024Mi
-  stdin: true
-  stdinOnce: true
-  tty: true
-  restartPolicy: Never
