@@ -1,0 +1,34 @@
+on:
+  push:
+    branches: [ main ]
+
+env:
+  VERSION: 2.12.0 # confluentinc/confluent-cli version
+  IMAGE: ghcr.io/navikt/aap-kafka-cli/kafka-cli:${{ env.VERSION }}
+
+jobs:
+  re-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: docker manifest inspect confluentinc/confluent-cli:${{ env.VERSION }}
+      - run: docker pull confluentinc/confluent-cli:${{ env.VERSION }}
+      - run: docker tag confluentinc/confluent-cli:${{ env.VERSION }} ghcr.io/navikt/aap-kafka-cli/kafka-cli:${{ env.VERSION }}
+      - run: docker push ghcr.io/navikt/aap-kafka-cli/kafka-cli:${{ env.VERSION }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ re-tag ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: nais.yml
+          PRINT_PAYLOAD: true
