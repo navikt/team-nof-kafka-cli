@@ -5,7 +5,7 @@ RUN apk update && apk upgrade && apk add bash curl jq
 ENV KAFKA_URL=https://dlcdn.apache.org/kafka/3.1.0/kafka_2.13-3.1.0.tgz
 ENV KAFKA_DOWNLOAD=/download/kafka.tgz
 ENV KAFKA_WORKDIR=/cli/kafka
-ENV PATH=$PATH:/${KAFKA_WORKDIR}/bin
+ENV PATH=${KAFKA_WORKDIR}/bin:${PATH}
 
 RUN curl ${KAFKA_URL} --create-dirs -o ${KAFKA_DOWNLOAD}
 
@@ -15,4 +15,8 @@ RUN tar -xvzpf ${KAFKA_DOWNLOAD} --strip-components=1 -C ${KAFKA_WORKDIR} && rm 
 
 WORKDIR ${KAFKA_WORKDIR}
 
-CMD ["tail", "-f", "/dev/null"]
+COPY entrypoint.sh /cli/
+
+ENTRYPOINT ["/cli/entrypoint.sh"]
+
+# CMD ["tail", "-f", "/dev/null"]
