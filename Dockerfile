@@ -9,7 +9,7 @@ ENV PATH=$PATH:/${KAFKA_WORKDIR}/bin
 
 RUN wget ${KAFKA_URL} -O ${KAFKA_DOWNLOAD}
 
-RUN tar -xzf ${KAFKA_DOWNLOAD} --strip-components=1 -C ${KAFKA_WORKDIR} && rm ${KAFKA_DOWNLOAD}
+RUN tar -xvzpf ${KAFKA_DOWNLOAD} --strip-components=1 -C ${KAFKA_WORKDIR} && rm ${KAFKA_DOWNLOAD}
 
 WORKDIR ${KAFKA_WORKDIR}
 
