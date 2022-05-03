@@ -19,4 +19,4 @@ COPY entrypoint.sh /cli/
 
 ENTRYPOINT ["/cli/entrypoint.sh"]
 
-# CMD ["tail", "-f", "/dev/null"]
+CMD ["tail", "-f", "/dev/null"]
