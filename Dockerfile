@@ -9,6 +9,8 @@ ENV PATH=$PATH:/${KAFKA_WORKDIR}/bin
 
 RUN curl ${KAFKA_URL} --create-dirs -o ${KAFKA_DOWNLOAD}
 
+RUN mkdir -p ${KAFKA_WORKDIR}
+
 RUN tar -xvzpf ${KAFKA_DOWNLOAD} --strip-components=1 -C ${KAFKA_WORKDIR} && rm ${KAFKA_DOWNLOAD}
 
 WORKDIR ${KAFKA_WORKDIR}
