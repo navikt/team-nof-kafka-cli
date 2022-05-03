@@ -15,7 +15,7 @@ RUN tar -xvzpf ${KAFKA_DOWNLOAD} --strip-components=1 -C ${KAFKA_WORKDIR} && rm 
 
 WORKDIR ${KAFKA_WORKDIR}
 
-RUN CHMOD 777 ${KAFKA_WORKDIR}/config
+RUN chmod 777 ${KAFKA_WORKDIR}/config
 
 COPY entrypoint.sh /cli/
 
