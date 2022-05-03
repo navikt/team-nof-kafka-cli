@@ -1,6 +1,6 @@
 FROM eclipse-temurin:18-alpine
 
-RUN apk update && apk upgrade && apk add bash curl jq
+RUN apk update && apk upgrade && apk add bash curl jq vim
 
 ENV KAFKA_URL=https://dlcdn.apache.org/kafka/3.1.0/kafka_2.13-3.1.0.tgz
 ENV KAFKA_DOWNLOAD=/download/kafka.tgz
