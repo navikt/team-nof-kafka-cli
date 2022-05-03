@@ -1,6 +1,9 @@
 ### Config
 Create a security config `aiven.conf` in directory `/tmp` as this is the only writeable directory.
 Goto `/tmp` before executing any scripts.
+
+You will have to use the applications truststore and keystore to change internal kafka streams topics.
+
 ```shell
 echo "
 security.protocol=SSL
