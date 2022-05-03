@@ -24,3 +24,5 @@ ssl.keystore.password=$KAFKA_CREDSTORE_PASSWORD
 ssl.truststore.location=$KAFKA_TRUSTSTORE_PATH
 ssl.truststore.password=$KAFKA_CREDSTORE_PASSWORD
 " >> aiven.conf
+
+exec "$@"
