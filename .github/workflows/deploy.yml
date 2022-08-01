@@ -35,6 +35,6 @@ jobs:
       - uses: nais/deploy/actions/deploy@v1
         env:
           CLUSTER: prod-gcp
-          RESOURCE: prod-nais.yml.yml
+          RESOURCE: prod-nais.yml
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           PRINT_PAYLOAD: true
