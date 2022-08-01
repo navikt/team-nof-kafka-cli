@@ -17,5 +17,6 @@ spec:
     requests:
       cpu: 1000m
       memory: 2048Mi
-  envFrom:
+  filesFrom:
    - secret: aiven-vedtak-6rxv2sxp
+     mountPath: /var/run/secrets
