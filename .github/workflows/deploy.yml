@@ -17,6 +17,8 @@ on:
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
+  POOL: nav-${{ github.event.inputs.environment }}
+  SECRET: ${{ github.event.inputs.aiven-secret }}
 
 jobs:
   deploy:
@@ -42,5 +44,3 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           PRINT_PAYLOAD: true
           CLUSTER: ${{ github.event.inputs.environment }}-gcp
-          POOL: nav-${{ github.event.inputs.environment }}
-          SECRET: ${{ github.event.inputs.aiven-secret }}
