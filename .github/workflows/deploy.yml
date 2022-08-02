@@ -17,9 +17,6 @@ on:
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
-  NAIS: ${{ github.event.inputs.environment }}-gcp
-  KAFKA: nav-${{ github.event.inputs.environment }}
-  AIVEN: ${{ github.event.inputs.aiven-secret }}
 
 jobs:
   deploy:
@@ -44,4 +41,6 @@ jobs:
           RESOURCE: nais.yml
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           PRINT_PAYLOAD: true
-          CLUSTER: ${{env.NAIS}}
+          CLUSTER: ${{ github.event.inputs.environment }}-gcp
+          POOL: nav-${{ github.event.inputs.environment }}
+          SECRET: ${{ github.event.inputs.aiven-secret }}
