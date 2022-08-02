@@ -3,10 +3,23 @@ name: Deploy
 on:
   push:
     branches: [ main ]
+
   workflow_dispatch:
+    inputs:
+      environment:
+        description: Select GCP environment
+        required: true
+        default: 'dev'
+        options: [ 'dev', 'prod' ]
+      aiven-secret:
+        description: Aiven secret to mount, e.g aiven-vedtak-6rxv2sxp
+        required: true
 
 env:
-  IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
+  image: ghcr.io/${{ github.repository }}:${{ github.sha }}
+  aiven-secret: ${{ github.event.inputs.aiven-secret }}
+  kafka-pool: nav-${{ github.event.inputs.environment }}
+  cluster: ${{ github.event.inputs.environment }}-gcp
 
 jobs:
   deploy:
@@ -23,18 +36,10 @@ jobs:
       - uses: docker/build-push-action@v2.10.0
         with:
           push: true
-          tags: ${{ env.IMAGE }},ghcr.io/navikt/${{ github.repository }}:latest
+          tags: ${{ env.image }},ghcr.io/navikt/${{ github.repository }}:latest
 
       - uses: nais/deploy/actions/deploy@v1
         env:
-          CLUSTER: dev-gcp
           RESOURCE: nais.yml
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          PRINT_PAYLOAD: true
-
-      - uses: nais/deploy/actions/deploy@v1
-        env:
-          CLUSTER: prod-gcp
-          RESOURCE: prod-nais.yml
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           PRINT_PAYLOAD: true

@@ -5,14 +5,16 @@ metadata:
   namespace: aap
   labels:
     team: aap
+  annotations:
+    nais.io/read-only-file-system: "false"
 spec:
   image: {{image}}
-  kafka:
-    pool: nav-dev
-    streams: true
   replicas:
     min: 1
     max: 1
+  kafka:
+    pool: {{kafka-pool}}
+    streams: true
   resources:
     limits:
       cpu: 1000m
@@ -20,3 +22,6 @@ spec:
     requests:
       cpu: 1000m
       memory: 2048Mi
+  filesFrom:
+    - secret: {{aiven-secret}}
+      mountPath: /var/run/secrets
