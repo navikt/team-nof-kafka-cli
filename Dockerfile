@@ -14,6 +14,9 @@ RUN tar -xvzpf ${KAFKA_DOWNLOAD} --strip-components=1 -C ${KAFKA_WORKDIR} && rm 
 WORKDIR ${KAFKA_WORKDIR}
 
 COPY entrypoint.sh /cli/
+
+RUN chmod +x /cli/entrypoint.sh
+
 CMD ["/cli/entrypoint.sh"]
 
 #CMD ["tail", "-f", "/dev/null"]
