@@ -6,6 +6,8 @@ on:
       environment:
         description: Select GCP environment
         required: true
+        default: dev
+        type: choice
         options:
           - dev
           - prod
