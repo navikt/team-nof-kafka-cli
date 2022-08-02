@@ -14,13 +14,11 @@ on:
 
 env:
   image: ghcr.io/${{ github.repository }}:${{ github.sha }}
-  aiven-secret: ${{ github.event.inputs.aiven-secret }}
-  kafka-pool: nav-${{ github.event.inputs.environment }}
-  cluster: ${{ github.event.inputs.environment }}-gcp
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    name: Deploy til ${{ github.event.inputs.environment }}
     steps:
       - uses: styfle/cancel-workflow-action@0.9.1
       - uses: actions/checkout@v3
@@ -40,3 +38,6 @@ jobs:
           RESOURCE: nais.yml
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           PRINT_PAYLOAD: true
+          cluster: ${{ github.event.inputs.environment }}-gcp
+          kafka-pool: nav-${{ github.event.inputs.environment }}
+          aiven-secret: ${{ github.event.inputs.aiven-secret }}
