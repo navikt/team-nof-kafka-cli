@@ -15,7 +15,8 @@ WORKDIR ${KAFKA_WORKDIR}
 
 COPY entrypoint.sh /cli/
 
-RUN chmod +x /cli/entrypoint.sh
+RUN touch /cli/kafka/config/aiven.conf
+RUN chmod 777 /cli/kafka/config/aiven.conf
 
 CMD ["/cli/entrypoint.sh"]
 
