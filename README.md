@@ -1,33 +1,32 @@
 ### Config
 
 ### Reset streams application
+Reset topologi (kafka strømmen), application-id er laget av nais og finnes som env-var i poden
 ```shell
-kafka-streams-application-reset.sh --bootstrap-servers $KAFKA_BROKERS \
- --config-file $AIVEN_CONF \
+kubectl exec -i deploy/kafka-cli -- kafka-streams-application-reset 
  --application-id aap.vedtak_stream_ \
  --input-topics aap.medlem.v1
 ```
 
 ### Show consumers in a group
 ```shell
-kafka-consumer-groups.sh --bootstrap-server $KAFKA_BROKERS \
- --command-config $AIVEN_CONF \
+kubectl exec -i deploy/kafka-cli -- kafka-consumer-groups
  --group aap.vedtak_stream_ \
  --describe
 ```
 
 ### List consumer groups
 ```shell
-kafka-consumer-groups.sh --bootstrap-server $KAFKA_BROKERS --command-config  $AIVEN_CONF --list
+kubectl exec -i deploy/kafka-cli -- kafka-consumer-groups --list
 ```
 
 ### Interactive shell commands
 Use scripts from /scripts to include brokers and aiven config, e.g:
 
 ```shell
-kubectl exec -i kafka-cli-b669dbc8f-t6gsn -- kafka-consumer-groups --list
+kubectl exec -i deploy/kafka-cli -- kafka-consumer-groups --list
 ```
 
 ```shell
-kubectl exec -i kafka-cli-b669dbc8f-t6gsn -- kafka-topics --describe --topic aap.soknad-sendt.v1 
+kubectl exec -i deploy/kafka-cli -- kafka-topics --describe --topic aap.soknad-sendt.v1 
 ```
