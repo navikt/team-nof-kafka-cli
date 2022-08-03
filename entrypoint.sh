@@ -32,4 +32,4 @@ pwd
 
 cat /cli/kafka/config/aiven.conf
 
-exec "$@"
+tail -f /dev/null

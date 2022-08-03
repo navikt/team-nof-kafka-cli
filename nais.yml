@@ -24,4 +24,4 @@ spec:
       memory: 2048Mi
   filesFrom:
     - secret: {{secret}}
-      mountPath: /var/run/secrets
+      mountPath: /var/run/secrets/nais.io/kafka
