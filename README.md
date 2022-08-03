@@ -22,9 +22,12 @@ kafka-consumer-groups.sh --bootstrap-server $KAFKA_BROKERS --command-config  $AI
 ```
 
 ### Interactive shell commands
+Use scripts from /scripts to include brokers and aiven config, e.g:
+
 ```shell
-kubectl exec -i kafka-cli-b669dbc8f-t6gsn -- kafka-consumer-groups.sh /
-  --bootstrap-server "nav-prod-kafka-nav-prod.aivencloud.com:26484" /
-  --command-config "/cli/kafka/config/aiven.conf" /
-  --list
+kubectl exec -i kafka-cli-b669dbc8f-t6gsn -- kafka-consumer-groups --list
+```
+
+```shell
+kubectl exec -i kafka-cli-b669dbc8f-t6gsn -- kafka-topics --describe --topic aap.soknad-sendt.v1 
 ```
