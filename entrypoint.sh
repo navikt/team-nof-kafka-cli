@@ -15,10 +15,8 @@ ssl.keystore.location=/var/run/secrets/other-app/kafka/client.keystore.p12
 ssl.keystore.password=$KAFKA_CREDSTORE_PASSWORD
 ssl.truststore.location=/var/run/secrets/other-app/kafka/client.truststore.jks
 ssl.truststore.password=$KAFKA_CREDSTORE_PASSWORD
-" >> /cli/kafka/config/aiven.conf
+" >> "$AIVEN_CONF"
 
-pwd
-
-cat /cli/kafka/config/aiven.conf
+cat "$AIVEN_CONF"
 
 tail -f /dev/null

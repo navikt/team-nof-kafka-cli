@@ -1,24 +1,9 @@
 ### Config
-Create a security config `aiven.conf` in directory `/tmp` as this is the only writeable directory.
-Goto `/tmp` before executing any scripts.
-
-You will have to use the applications truststore and keystore to change internal kafka streams topics.
-
-```shell
-echo "
-security.protocol=SSL
-ssl.keystore.type=PKCS12
-ssl.keystore.location=$KAFKA_KEYSTORE_PATH
-ssl.keystore.password=$KAFKA_CREDSTORE_PASSWORD
-ssl.truststore.location=$KAFKA_TRUSTSTORE_PATH
-ssl.truststore.password=$KAFKA_CREDSTORE_PASSWORD
-" >> aiven.conf
-```
 
 ### Reset streams application
 ```shell
 kafka-streams-application-reset.sh --bootstrap-servers $KAFKA_BROKERS \
- --config-file aiven.conf \
+ --config-file $AIVEN_CONF \
  --application-id aap.vedtak_stream_ \
  --input-topics aap.medlem.v1
 ```
@@ -26,13 +11,20 @@ kafka-streams-application-reset.sh --bootstrap-servers $KAFKA_BROKERS \
 ### Show consumers in a group
 ```shell
 kafka-consumer-groups.sh --bootstrap-server $KAFKA_BROKERS \
- --command-config aiven.conf \
+ --command-config $AIVEN_CONF \
  --group aap.vedtak_stream_ \
  --describe
 ```
 
 ### List consumer groups
 ```shell
-kafka-consumer-groups.sh --bootstrap-server $KAFKA_BROKERS --command-config aiven.conf \
+kafka-consumer-groups.sh --bootstrap-server $KAFKA_BROKERS --command-config  $AIVEN_CONF --list
+```
+
+### Interactive shell commands
+```shell
+kubectl exec -i kafka-cli-b669dbc8f-t6gsn -- kafka-consumer-groups.sh /
+  --bootstrap-server "nav-prod-kafka-nav-prod.aivencloud.com:26484" /
+  --command-config "/cli/kafka/config/aiven.conf" /
   --list
 ```
