@@ -30,3 +30,4 @@ kubectl exec -i deploy/kafka-cli -- kafka-consumer-groups --list
 ```shell
 kubectl exec -i deploy/kafka-cli -- kafka-topics --describe --topic aap.soknad-sendt.v1 
 ```
+
