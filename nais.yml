@@ -2,9 +2,9 @@ apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
   name: kafka-cli
-  namespace: aap
+  namespace: team-nof
   labels:
-    team: aap
+    team: team-nof
   annotations:
     nais.io/read-only-file-system: "false"
 spec:
