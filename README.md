@@ -16,14 +16,14 @@ kubectl scale deployment fullmakt-state-converter --replicas=0
 
 ```shell
 kubectl exec -i deploy/kafka-cli -- kafka-streams-application-reset 
- --application-id team-nof.fullmakt-state-converter \
+ --application-id team-nof.fullmakt-state-converter_ \
  --input-topics team-nof.fullmakt-eventsource
 ```
 
 ### Show consumers in a group
 ```shell
 kubectl exec -i deploy/kafka-cli -- kafka-consumer-groups
- --group team-nof.fullmakt-state-converter \
+ --group team-nof.fullmakt-state-converter_ \
  --describe
 ```
 
