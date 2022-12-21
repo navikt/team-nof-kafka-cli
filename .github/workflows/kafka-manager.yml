@@ -19,13 +19,13 @@ jobs:
       - name: Apply to dev-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
-          RESOURCE: .nais/org-kafka-manager-dev.yml
+          RESOURCE: .nais/kafka-manager-dev.yaml
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
 
       - name: Apply to prod-gcp
         uses: nais/deploy/actions/deploy@v1
         env:
-          RESOURCE: .nais/org-kafka-manager-prod.yml
+          RESOURCE: .nais/kafka-manager-prod.yaml
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
