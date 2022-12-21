@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy kafka-cli
 
 on:
   workflow_dispatch:
@@ -40,7 +40,7 @@ jobs:
 
       - uses: nais/deploy/actions/deploy@v1
         env:
-          RESOURCE: nais.yml
+          RESOURCE: .nais/kafka-cli.yml
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           PRINT_PAYLOAD: true
           CLUSTER: ${{ github.event.inputs.environment }}-gcp
